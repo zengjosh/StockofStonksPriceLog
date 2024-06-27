@@ -38,6 +38,5 @@ def log_price_history(item_name, filename='STOCK_OF_STONKS_price_history.csv'):
         
         print(f"Logged data for {item_name} at {timestamp}")
 
-if __name__ == "__main__":
-    item_name = 'STOCK_OF_STONKS'
-    log_price_history(item_name)
+item_name = 'STOCK_OF_STONKS'
+log_price_history(item_name)
