@@ -8,6 +8,7 @@ on:
 jobs:
   run-script:
     runs-on: ubuntu-latest
+    timeout-minutes: 360  # Set the timeout to 6 hours
 
     steps:
     - name: Checkout repository
@@ -27,3 +28,9 @@ jobs:
       env:
         HYPIXEL_API_KEY: ${{ secrets.HYPIXEL_API_KEY }}
       run: python datalog.py
+
+    - name: Upload CSV artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: STOCK_OF_STONKS_price_history
+        path: STOCK_OF_STONKS_price_history.csv
