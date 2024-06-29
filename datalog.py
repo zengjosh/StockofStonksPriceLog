@@ -2,7 +2,6 @@ import os
 import requests
 import csv
 from datetime import datetime
-from time import sleep
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -52,7 +51,4 @@ def log_data():
         print("No data to log.")
 
 if __name__ == "__main__":
-    while True:
-        log_data()
-        print("Logged data, sleeping for 5 minutes...")
-        sleep(300)  # Sleep for 300 seconds (5 minutes)
+    log_data()
