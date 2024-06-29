@@ -16,29 +16,4 @@ jobs:
 
     - name: Set up Python
       uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Download CSV artifact if exists
-      id: download-artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: STOCK_OF_STONKS_price_history
-        path: STOCK_OF_STONKS_price_history.csv
-      continue-on-error: true
-
-    - name: Run script
-      env:
-        HYPIXEL_API_KEY: ${{ secrets.HYPIXEL_API_KEY }}
-      run: python datalog.py
-
-    - name: Upload CSV artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: STOCK_OF_STONKS_price_history
-        path: STOCK_OF_STONKS_price_history.csv
+     
