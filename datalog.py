@@ -34,7 +34,6 @@ def log_data():
         with open('STOCK_OF_STONKS_price_history.csv', 'a', newline='') as csvfile:
             fieldnames = ['timestamp', 'item', 'buy_price', 'sell_price']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            print(f"Logged data for {'STOCK_OF_STONKS'} at {timestamp}")
             
             # Write header only if the file is empty
             if csvfile.tell() == 0:
@@ -46,6 +45,8 @@ def log_data():
                 'buy_price': buy_price,
                 'sell_price': sell_price
             })
+
+            print(f"Logged data for {'STOCK_OF_STONKS'} at {timestamp}")
 
 if __name__ == "__main__":
     log_data()
