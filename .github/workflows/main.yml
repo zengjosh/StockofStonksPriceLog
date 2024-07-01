@@ -13,6 +13,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        persist-credentials: false
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -24,30 +27,20 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Check for existing artifact
-      id: check-artifact
-      run: |
-        if ! aws s3 ls "s3://your-bucket-name/STOCK_OF_STONKS_price_history.csv"; then
-          echo "artifact_exists=false" >> $GITHUB_ENV
-        else
-          echo "artifact_exists=true" >> $GITHUB_ENV
-        fi
-
-    - name: Download CSV artifact if exists
-      if: env.artifact_exists == 'true'
-      uses: actions/download-artifact@v4
-      with:
-        name: STOCK_OF_STONKS_price_history
-        path: STOCK_OF_STONKS_price_history.csv
-      continue-on-error: true
-
     - name: Run script
       env:
         HYPIXEL_API_KEY: ${{ secrets.HYPIXEL_API_KEY }}
       run: python datalog.py
 
-    - name: Upload CSV artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: STOCK_OF_STONKS_price_history
-        path: STOCK_OF_STONKS_price_history.csv
+    - name: Configure Git
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+    - name: Commit and Push Changes
+      run: |
+        git add STOCK_OF_STONKS_price_history.csv
+        git commit -m "Update STOCK_OF_STONKS_price_history.csv"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
