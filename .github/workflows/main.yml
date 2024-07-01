@@ -15,7 +15,6 @@ jobs:
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        persist-credentials: false
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -32,13 +31,10 @@ jobs:
         HYPIXEL_API_KEY: ${{ secrets.HYPIXEL_API_KEY }}
       run: python datalog.py
 
-    - name: Configure Git
+    - name: Commit and Push Changes
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
-    - name: Commit and Push Changes
-      run: |
         git add STOCK_OF_STONKS_price_history.csv
         git commit -m "Update STOCK_OF_STONKS_price_history.csv"
         git push
