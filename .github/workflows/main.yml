@@ -1,4 +1,4 @@
-name: Run Python Script
+name: Log Stock of Stonks Data
 
 on:
   schedule:
@@ -6,13 +6,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-script:
+  log-data:
     runs-on: ubuntu-latest
     timeout-minutes: 360  # Set the timeout to 6 hours
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -26,7 +26,7 @@ jobs:
 
     - name: Download CSV artifact if exists
       id: download-artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: STOCK_OF_STONKS_price_history
         path: STOCK_OF_STONKS_price_history.csv
