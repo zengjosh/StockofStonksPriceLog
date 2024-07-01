@@ -24,8 +24,17 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Check for existing artifact
+      id: check-artifact
+      run: |
+        if ! aws s3 ls "s3://your-bucket-name/STOCK_OF_STONKS_price_history.csv"; then
+          echo "artifact_exists=false" >> $GITHUB_ENV
+        else
+          echo "artifact_exists=true" >> $GITHUB_ENV
+        fi
+
     - name: Download CSV artifact if exists
-      id: download-artifact
+      if: env.artifact_exists == 'true'
       uses: actions/download-artifact@v4
       with:
         name: STOCK_OF_STONKS_price_history
